@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/thys-wood-whispers-feedback/", // Add this line for GitHub Pages
+  base: "/thys-wood-design-feedback/", // Updated to match your GitHub Pages URL
   server: {
     host: "::",
     port: 8080,
