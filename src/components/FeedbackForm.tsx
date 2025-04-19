@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
-// Update the form schema to include wood_type field
 const formSchema = z.object({
   customer_name: z.string().min(2, "Please enter your full name"),
   product_name: z.string().min(1, "Please select a product"),
@@ -55,7 +53,7 @@ const FeedbackForm = () => {
         .insert({
           customer_name: values.customer_name,
           product_name: values.product_name,
-          wood_type: values.wood_type, // Add wood_type to the insert
+          wood_type: values.wood_type,
           rating: selectedRating,
           why_buy_reason: values.why_buy_reason,
           improvement_suggestion: values.improvement_suggestion,

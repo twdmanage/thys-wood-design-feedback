@@ -20,6 +20,7 @@ export type Database = {
           rating: number
           subscribe_to_newsletter: boolean
           why_buy_reason: string | null
+          wood_type: string
         }
         Insert: {
           created_at?: string
@@ -31,6 +32,7 @@ export type Database = {
           rating: number
           subscribe_to_newsletter?: boolean
           why_buy_reason?: string | null
+          wood_type?: string
         }
         Update: {
           created_at?: string
@@ -42,6 +44,7 @@ export type Database = {
           rating?: number
           subscribe_to_newsletter?: boolean
           why_buy_reason?: string | null
+          wood_type?: string
         }
         Relationships: []
       }
