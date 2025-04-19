@@ -1,6 +1,7 @@
+
 import { User, Gift, ShoppingBag } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
-import { FeedbackFormValues } from "./feedbackSchema";
+import { FeedbackFormValues } from "@/components/feedback/feedbackSchema";
 import {
   FormField,
   FormItem,
