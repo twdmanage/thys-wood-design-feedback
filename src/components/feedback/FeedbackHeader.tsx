@@ -1,9 +1,11 @@
 
+import React from 'react';
+
 const FeedbackHeader = () => {
   return (
     <div className="text-center">
       <img
-        src="/logo.png"
+        src="https://res.cloudinary.com/dlsjdyti8/image/upload/v1745065446/2023-10-16_TWD_Logo_Brown_j64mn0.png"
         alt="Thys Wood Design Logo"
         className="mx-auto h-24 mb-4"
       />
