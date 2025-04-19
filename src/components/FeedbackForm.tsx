@@ -45,6 +45,16 @@ const FeedbackForm = () => {
 
       if (error) throw error;
 
+      if (values.customer_email) {
+        await supabase.functions.invoke('send-thank-you', {
+          body: {
+            customerName: values.customer_name,
+            customerEmail: values.customer_email,
+            productName: values.product_name,
+          }
+        });
+      }
+
       toast({
         title: "Thank you for your feedback!",
         description: "We really appreciate your input.",
