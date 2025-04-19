@@ -113,22 +113,41 @@ const FeedbackForm = () => {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="product_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Which product did you purchase?</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. Wooden Necklace" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="product_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Product Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. Forest Pendant" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="wood_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Wood Type</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. Oak, Maple, Walnut" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <div className="space-y-2">
             <FormLabel>How would you rate this product?</FormLabel>
+            <p className="text-sm text-muted-foreground mb-2">
+              Rate from 1 (Very Dissatisfied) to 5 (Very Satisfied)
+            </p>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((rating) => (
                 <Button
@@ -144,6 +163,10 @@ const FeedbackForm = () => {
                   />
                 </Button>
               ))}
+            </div>
+            <div className="flex justify-between text-sm text-muted-foreground mt-1">
+              <span>Very Dissatisfied</span>
+              <span>Very Satisfied</span>
             </div>
           </div>
 
