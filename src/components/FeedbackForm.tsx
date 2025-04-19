@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -68,14 +67,14 @@ const FeedbackForm = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FeedbackFields form={form} />
-          
           <div className="space-y-2">
             <StarRating
               selectedRating={selectedRating}
               onRatingChange={setSelectedRating}
             />
           </div>
+          
+          <FeedbackFields form={form} />
 
           <Button type="submit" className="w-full">
             Submit Feedback
