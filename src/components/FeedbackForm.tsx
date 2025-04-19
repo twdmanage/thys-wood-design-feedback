@@ -23,7 +23,7 @@ const FeedbackForm = () => {
       customer_name: "",
       product_name: "",
       wood_type: "",
-      why_buy_reason: "",
+      why_buy_reason: undefined,
       improvement_suggestion: "",
       customer_email: "",
       subscribe_to_newsletter: false,
