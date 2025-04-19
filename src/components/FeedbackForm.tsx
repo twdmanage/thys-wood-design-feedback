@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Star, Send } from "lucide-react";
+import { Star, Send, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -20,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
+  customer_name: z.string().min(2, "Please enter your full name"),
   product_name: z.string().min(1, "Please select a product"),
   rating: z.number().min(1).max(5),
   why_buy_reason: z.string().min(3, "Please tell us why you chose our products"),
@@ -35,6 +35,7 @@ const FeedbackForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      customer_name: "",
       product_name: "",
       why_buy_reason: "",
       improvement_suggestion: "",
@@ -45,11 +46,10 @@ const FeedbackForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      // Ensure we're using the correct structure for the insert
-      // Make sure product_name and rating are included as required by the database schema
       const { error } = await supabase
         .from("customer_feedback")
         .insert({
+          customer_name: values.customer_name,
           product_name: values.product_name,
           rating: selectedRating,
           why_buy_reason: values.why_buy_reason,
@@ -92,6 +92,24 @@ const FeedbackForm = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="customer_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Your Full Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Enter your full name" 
+                    {...field} 
+                    icon={<User className="h-4 w-4 text-muted-foreground" />}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="product_name"
