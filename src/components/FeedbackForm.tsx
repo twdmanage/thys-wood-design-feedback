@@ -45,9 +45,18 @@ const FeedbackForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      // Ensure we're using the correct structure for the insert
+      // Make sure product_name and rating are included as required by the database schema
       const { error } = await supabase
         .from("customer_feedback")
-        .insert([{ ...values, rating: selectedRating }]);
+        .insert({
+          product_name: values.product_name,
+          rating: selectedRating,
+          why_buy_reason: values.why_buy_reason,
+          improvement_suggestion: values.improvement_suggestion,
+          customer_email: values.customer_email,
+          subscribe_to_newsletter: values.subscribe_to_newsletter,
+        });
 
       if (error) throw error;
 
