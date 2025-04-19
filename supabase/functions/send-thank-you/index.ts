@@ -47,7 +47,7 @@ const handler = async (req: Request): Promise<Response> => {
           <div style="text-align: center; margin-top: 30px; padding: 20px; background-color: #f9f5f2;">
             <p style="color: #4a3828; margin: 0;">
               With gratitude,<br>
-              The Thys Wood Design Team
+              Denzel Thys
             </p>
           </div>
         </div>
