@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,6 +15,7 @@ import StarRating from "./feedback/StarRating";
 const FeedbackForm = () => {
   const { toast } = useToast();
   const [selectedRating, setSelectedRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FeedbackFormValues>({
     resolver: zodResolver(formSchema),
@@ -29,7 +31,19 @@ const FeedbackForm = () => {
   });
 
   const onSubmit = async (values: FeedbackFormValues) => {
+    if (selectedRating === 0) {
+      toast({
+        title: "Please select a rating",
+        description: "Please let us know how you rate our product.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
+      setIsSubmitting(true);
+      console.log("Submitting feedback...", { ...values, rating: selectedRating });
+      
       const { error } = await supabase
         .from("customer_feedback")
         .insert({
@@ -39,13 +53,17 @@ const FeedbackForm = () => {
           rating: selectedRating,
           why_buy_reason: values.why_buy_reason,
           improvement_suggestion: values.improvement_suggestion,
-          customer_email: values.customer_email,
+          customer_email: values.customer_email || null,
           subscribe_to_newsletter: values.subscribe_to_newsletter,
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error submitting feedback:", error);
+        throw error;
+      }
 
       if (values.customer_email) {
+        console.log("Sending thank you email...");
         await supabase.functions.invoke('send-thank-you', {
           body: {
             customerName: values.customer_name,
@@ -63,11 +81,14 @@ const FeedbackForm = () => {
       form.reset();
       setSelectedRating(0);
     } catch (error) {
+      console.error("Error in submit process:", error);
       toast({
         title: "Error submitting feedback",
         description: "Please try again later.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,12 +103,21 @@ const FeedbackForm = () => {
               selectedRating={selectedRating}
               onRatingChange={setSelectedRating}
             />
+            {selectedRating === 0 && form.formState.isSubmitted && (
+              <p className="text-sm font-medium text-destructive mt-1">
+                Please select a rating
+              </p>
+            )}
           </div>
           
           <FeedbackFields form={form} />
 
-          <Button type="submit" className="w-full">
-            Submit Feedback
+          <Button 
+            type="submit" 
+            className="w-full" 
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
             <Send className="ml-2 h-4 w-4" />
           </Button>
         </form>
