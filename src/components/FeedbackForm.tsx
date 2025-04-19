@@ -99,11 +99,14 @@ const FeedbackForm = () => {
               <FormItem>
                 <FormLabel>Your Full Name</FormLabel>
                 <FormControl>
-                  <Input 
-                    placeholder="Enter your full name" 
-                    {...field} 
-                    icon={<User className="h-4 w-4 text-muted-foreground" />}
-                  />
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input 
+                      placeholder="Enter your full name" 
+                      className="pl-9"
+                      {...field} 
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
