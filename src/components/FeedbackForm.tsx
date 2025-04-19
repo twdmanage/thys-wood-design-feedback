@@ -1,0 +1,202 @@
+
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Star, Send } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+
+const formSchema = z.object({
+  product_name: z.string().min(1, "Please select a product"),
+  rating: z.number().min(1).max(5),
+  why_buy_reason: z.string().min(3, "Please tell us why you chose our products"),
+  improvement_suggestion: z.string().optional(),
+  customer_email: z.string().email().optional(),
+  subscribe_to_newsletter: z.boolean().default(false),
+});
+
+const FeedbackForm = () => {
+  const { toast } = useToast();
+  const [selectedRating, setSelectedRating] = useState(0);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      product_name: "",
+      why_buy_reason: "",
+      improvement_suggestion: "",
+      customer_email: "",
+      subscribe_to_newsletter: false,
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { error } = await supabase
+        .from("customer_feedback")
+        .insert([{ ...values, rating: selectedRating }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Thank you for your feedback!",
+        description: "We really appreciate your input.",
+      });
+
+      form.reset();
+      setSelectedRating(0);
+    } catch (error) {
+      toast({
+        title: "Error submitting feedback",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto p-6 space-y-8">
+      <div className="text-center">
+        <img
+          src="/logo.png"
+          alt="Thys Wood Design Logo"
+          className="mx-auto h-24 mb-4"
+        />
+        <h1 className="text-3xl font-semibold mb-2">Share Your Feedback</h1>
+        <p className="text-muted-foreground">
+          Help us improve our wooden jewellery products
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="product_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Which product did you purchase?</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Wooden Necklace" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="space-y-2">
+            <FormLabel>How would you rate this product?</FormLabel>
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <Button
+                  key={rating}
+                  type="button"
+                  variant={selectedRating >= rating ? "default" : "outline"}
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => setSelectedRating(rating)}
+                >
+                  <Star
+                    className={selectedRating >= rating ? "fill-current" : ""}
+                  />
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          <FormField
+            control={form.control}
+            name="why_buy_reason"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Why did you choose our products?</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Tell us what attracted you to our wooden jewellery..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="improvement_suggestion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>How can we improve our products?</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Share your suggestions for improvement (optional)"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="customer_email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email (optional)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="your@email.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="subscribe_to_newsletter"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    Keep me updated about new products and special offers
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="w-full">
+            Submit Feedback
+            <Send className="ml-2 h-4 w-4" />
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
+};
+
+export default FeedbackForm;
