@@ -1,5 +1,5 @@
 
-import { User } from "lucide-react";
+import { User, Gift, ShoppingBag } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { FeedbackFormValues } from "./feedbackSchema";
 import {
@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface FeedbackFieldsProps {
   form: UseFormReturn<FeedbackFormValues>;
@@ -75,13 +76,33 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         control={form.control}
         name="why_buy_reason"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="space-y-3">
             <FormLabel>Why did you choose our products?</FormLabel>
             <FormControl>
-              <Textarea
-                placeholder="Tell us what attracted you to our wooden jewellery..."
-                {...field}
-              />
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="space-y-1"
+              >
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="gift" />
+                  </FormControl>
+                  <FormLabel className="font-normal flex items-center gap-2">
+                    <Gift className="h-4 w-4" />
+                    This is a gift for someone special
+                  </FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <FormControl>
+                    <RadioGroupItem value="self" />
+                  </FormControl>
+                  <FormLabel className="font-normal flex items-center gap-2">
+                    <ShoppingBag className="h-4 w-4" />
+                    I am spoiling myself
+                  </FormLabel>
+                </FormItem>
+              </RadioGroup>
             </FormControl>
             <FormMessage />
           </FormItem>
