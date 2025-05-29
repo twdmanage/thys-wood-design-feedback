@@ -2,6 +2,7 @@
 import { User, Gift, ShoppingBag } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { FeedbackFormValues } from "./feedbackSchema";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   FormField,
   FormItem,
@@ -19,6 +20,8 @@ interface FeedbackFieldsProps {
 }
 
 const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
+  const { t } = useLanguage();
+
   return (
     <>
       <FormField
@@ -26,12 +29,12 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="customer_name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Your Full Name (optional)</FormLabel>
+            <FormLabel>{t('yourFullName')}</FormLabel>
             <FormControl>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input 
-                  placeholder="Enter your full name" 
+                  placeholder={t('enterYourFullName')}
                   className="pl-9"
                   {...field} 
                 />
@@ -48,9 +51,9 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
           name="product_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Product Name *</FormLabel>
+              <FormLabel>{t('productName')}</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Forest Pendant" {...field} />
+                <Input placeholder={t('productPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -62,9 +65,9 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
           name="wood_type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Wood Type *</FormLabel>
+              <FormLabel>{t('woodType')}</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Oak, Maple, Walnut" {...field} />
+                <Input placeholder={t('woodTypePlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -77,7 +80,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="why_buy_reason"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>Why did you choose our products? *</FormLabel>
+            <FormLabel>{t('whyChooseProducts')}</FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -90,7 +93,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
                   </FormControl>
                   <FormLabel className="font-normal flex items-center gap-2">
                     <Gift className="h-4 w-4" />
-                    This is a gift for someone special
+                    {t('giftForSomeone')}
                   </FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
@@ -99,7 +102,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
                   </FormControl>
                   <FormLabel className="font-normal flex items-center gap-2">
                     <ShoppingBag className="h-4 w-4" />
-                    I am spoiling myself
+                    {t('spoilingMyself')}
                   </FormLabel>
                 </FormItem>
               </RadioGroup>
@@ -114,10 +117,10 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="improvement_suggestion"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>How can we improve our products? (optional)</FormLabel>
+            <FormLabel>{t('howImprove')}</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="Share your suggestions for improvement (optional)"
+                placeholder={t('improvementPlaceholder')}
                 {...field}
               />
             </FormControl>
@@ -131,11 +134,11 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="customer_email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email (optional)</FormLabel>
+            <FormLabel>{t('email')}</FormLabel>
             <FormControl>
               <Input
                 type="email"
-                placeholder="your@email.com"
+                placeholder={t('emailPlaceholder')}
                 {...field}
               />
             </FormControl>
@@ -157,7 +160,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
             </FormControl>
             <div className="space-y-1 leading-none">
               <FormLabel>
-                Keep me updated about new products and special offers
+                {t('newsletter')}
               </FormLabel>
             </div>
           </FormItem>

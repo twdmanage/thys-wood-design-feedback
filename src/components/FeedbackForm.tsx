@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { formSchema, type FeedbackFormValues } from "./feedback/feedbackSchema";
@@ -14,6 +15,7 @@ import StarRating from "./feedback/StarRating";
 
 const FeedbackForm = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [selectedRating, setSelectedRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -33,8 +35,8 @@ const FeedbackForm = () => {
   const onSubmit = async (values: FeedbackFormValues) => {
     if (selectedRating === 0) {
       toast({
-        title: "Please select a rating",
-        description: "Please let us know how you rate our product.",
+        title: t('selectRating'),
+        description: t('ratingDescription'),
         variant: "destructive",
       });
       return;
@@ -74,8 +76,8 @@ const FeedbackForm = () => {
       }
 
       toast({
-        title: "Thank you for your feedback!",
-        description: "We really appreciate your input.",
+        title: t('thankYou'),
+        description: t('appreciateInput'),
       });
 
       form.reset();
@@ -83,8 +85,8 @@ const FeedbackForm = () => {
     } catch (error) {
       console.error("Error in submit process:", error);
       toast({
-        title: "Error submitting feedback",
-        description: "Please try again later.",
+        title: t('errorSubmitting'),
+        description: t('tryAgainLater'),
         variant: "destructive",
       });
     } finally {
@@ -105,7 +107,7 @@ const FeedbackForm = () => {
             />
             {selectedRating === 0 && form.formState.isSubmitted && (
               <p className="text-sm font-medium text-destructive mt-1">
-                Please select a rating
+                {t('selectRating')}
               </p>
             )}
           </div>
@@ -117,7 +119,7 @@ const FeedbackForm = () => {
             className="w-full" 
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Submit Feedback"}
+            {isSubmitting ? t('submitting') : t('submitFeedback')}
             <Send className="ml-2 h-4 w-4" />
           </Button>
         </form>
