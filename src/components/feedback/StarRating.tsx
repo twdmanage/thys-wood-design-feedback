@@ -27,10 +27,6 @@ const StarRating = ({ selectedRating, onRatingChange }: StarRatingProps) => {
           </Button>
         ))}
       </div>
-      <div className="flex justify-between text-sm text-muted-foreground mt-1">
-        <span>Not so great</span>
-        <span>Loving it</span>
-      </div>
     </div>
   );
 };
