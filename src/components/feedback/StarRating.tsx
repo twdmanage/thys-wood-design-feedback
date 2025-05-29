@@ -11,7 +11,7 @@ const StarRating = ({ selectedRating, onRatingChange }: StarRatingProps) => {
   return (
     <div className="space-y-2">
       <p className="text-sm text-muted-foreground mb-2">
-        Rate your new pair of earrings from 1 (Not so great) to 5 (Loving it)
+        Rate your new product from 1 (Not so great) to 5 (Loving it)
       </p>
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map((rating) => (
