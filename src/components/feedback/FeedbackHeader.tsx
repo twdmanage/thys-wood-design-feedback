@@ -11,7 +11,7 @@ const FeedbackHeader = () => {
       />
       <h1 className="text-3xl font-semibold mb-2">Share Your Feedback</h1>
       <p className="text-muted-foreground">
-        Help us improve our wooden jewellery products
+        Your valuable input helps us to improve our products.
       </p>
     </div>
   );
