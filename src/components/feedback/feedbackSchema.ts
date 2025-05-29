@@ -2,7 +2,7 @@
 import * as z from "zod";
 
 export const formSchema = z.object({
-  customer_name: z.string().min(2, "Please enter your full name"),
+  customer_name: z.string().optional(),
   product_name: z.string().min(1, "Please select a product"),
   wood_type: z.string().min(1, "Please specify the wood type"),
   why_buy_reason: z.enum(["gift", "self"], {

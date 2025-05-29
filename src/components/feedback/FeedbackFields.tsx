@@ -26,7 +26,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="customer_name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Your Full Name</FormLabel>
+            <FormLabel>Your Full Name (optional)</FormLabel>
             <FormControl>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -48,7 +48,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
           name="product_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Product Name</FormLabel>
+              <FormLabel>Product Name *</FormLabel>
               <FormControl>
                 <Input placeholder="e.g. Forest Pendant" {...field} />
               </FormControl>
@@ -62,7 +62,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
           name="wood_type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Wood Type</FormLabel>
+              <FormLabel>Wood Type *</FormLabel>
               <FormControl>
                 <Input placeholder="e.g. Oak, Maple, Walnut" {...field} />
               </FormControl>
@@ -77,7 +77,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="why_buy_reason"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>Why did you choose our products?</FormLabel>
+            <FormLabel>Why did you choose our products? *</FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -114,7 +114,7 @@ const FeedbackFields = ({ form }: FeedbackFieldsProps) => {
         name="improvement_suggestion"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>How can we improve our products?</FormLabel>
+            <FormLabel>How can we improve our products? (optional)</FormLabel>
             <FormControl>
               <Textarea
                 placeholder="Share your suggestions for improvement (optional)"
