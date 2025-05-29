@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/thys-wood-whispers-feedback/", // Updated to match your actual project name
+  base: "/thys-wood-design-feedback/", // Updated to match your actual project name
   server: {
     host: "::",
     port: 8080,
